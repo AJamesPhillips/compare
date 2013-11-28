@@ -7,7 +7,7 @@ Compare objects and lists in python
 
 ## Example
 
-    >>> import compare
+    >>> from compare import compare
     >>> ob1 = {'a': {'b': [1, {'nested_e': ['some val'], 'c': 1, 'd': 2}, 2], 'f': 3}, 'g': 3}
     >>> ob2 = {'a': {'b': [1, {'nested_e': ['some val', 'something'], 'c': 1}, 2, 3], 'f': 3}, 'g': 4}
     >>> compare(ob1, ob2)
