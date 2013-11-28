@@ -29,12 +29,12 @@ def compare(ob1, ob2, path=[]):
               difference['ob1'].append(ob1[i])
               difference['ob2'].append('<not present>')
             difference['positions'].append(str(i))
-        print "{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n\n".format(
-          path=path_string(path),
-          positions=','.join(difference['positions']),
-          ob1=difference['ob1'],
-          ob2=difference['ob2'])
         if difference['ob1']:
+          print "{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n\n".format(
+            path=path_string(path),
+            positions=','.join(difference['positions']),
+            ob1=difference['ob1'],
+            ob2=difference['ob2'])
           return difference
         else:
           return False
