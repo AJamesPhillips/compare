@@ -12,12 +12,12 @@ Visualise differences between two objects or lists
     >>> ob2 = {'a': {'b': [1, {'nested_e': ['some val', 'something'], 'c': 1}, 2, 3], 'f': 3}, 'g': 4}
     >>> compare(ob1, ob2)
     
-    'a' > 3 > i:1 > 'nested_e' lists differed at positions: 1
-    ['<not present>']
-    ['something']
+    'a' > 3 > i:1 > 'nested_e' lists differed at positions: 1,2
+    ['<not present>', '<not present>']
+    ['something', 'else']
     
     
-    'a' > 3 > i:1 > 'd'   in ob1, value=2
+    'a' > 3 > i:1 > 'd'  key present in ob1, absent in ob2, value=2
     'a' > 3 > i:1
     
     
