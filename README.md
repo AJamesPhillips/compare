@@ -1,7 +1,7 @@
 Compare
 =======
 
-Visualise differences between two objects or lists
+Visualise differences between two dicts or lists
 
 
 
