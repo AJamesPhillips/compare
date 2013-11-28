@@ -44,14 +44,12 @@ def compare(ob1, ob2, path=[]):
       return False
   # COMPARE as dicts
   keys = list(set(ob1.keys()) | set(ob2.keys()))
-  difference = {'ob1':[], 'ob2':[]}
   for key in keys:
     path_str = path_string(path)
-    if key not in ob2:
-      print "{} > '{}'   in ob1, value={}\n{}\n\n".format(path_str, key, ob1[key], path_str)
-      continue
-    if key not in ob1:
-      print "{} > '{}'   in ob2, value={}\n{}\n\n".format(path_str, key, ob2[key], path_str)
+    if key not in ob1 or key not in ob2:
+      i = 2 if key not in ob1 else 1
+      val = locals().get('ob'+str(i))[key]
+      print "{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n\n".format(path_str, key, i, i%2+1, val, path_str)
       continue
     childpath = copy(path)
     childpath.append("'"+key+"'" if isinstance(key, basestring) else str(key))
@@ -64,7 +62,7 @@ def compare(ob1, ob2, path=[]):
 
 if __name__ == '__main__':
   ob1 = {'a':{3:[1,{'c':1,'d':2,'nested_e':['some val']},2],'f':3},'g':3}
-  ob2 = {'a':{3:[1,{'c':1,'nested_e':['some val', 'something']},2,3],'f':3},'g':4}
+  ob2 = {'a':{3:[1,{'c':1,'nested_e':['some val', 'something', 'else']},2,3],'f':3},'g':4}
   print 'Comparing two objects: \n{}\n{}\n\n'.format(ob1, ob2)
   compare(ob1, ob2)
 
