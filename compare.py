@@ -54,7 +54,7 @@ def compare(ob1, ob2, path=[]):
       print "{} > '{}'   in ob2, value={}\n{}\n\n".format(path_str, key, ob2[key], path_str)
       continue
     childpath = copy(path)
-    childpath.append("'"+key+"'" if isinstance(key, str) else str(key))
+    childpath.append("'"+key+"'" if isinstance(key, basestring) else str(key))
     different = compare(ob1[key], ob2[key], childpath)
     if different:
       if not isinstance(different, dict):
