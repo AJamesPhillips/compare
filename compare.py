@@ -6,6 +6,13 @@ def path_string(path):
   return ' > '.join(path)
 
 
+messages = []
+
+
+def print_msg(message):
+  messages.append(message)
+
+
 def compare(ob1, ob2, path=[]):
   if not (isinstance(ob1, dict) and isinstance(ob1, dict)):
     if ob1 != ob2:
@@ -30,11 +37,11 @@ def compare(ob1, ob2, path=[]):
               difference['ob2'].append('<not present>')
             difference['positions'].append(str(i))
         if difference['ob1']:
-          print "{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n\n".format(
-            path=path_string(path),
-            positions=','.join(difference['positions']),
-            ob1=difference['ob1'],
-            ob2=difference['ob2'])
+          print_msg("{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n\n".format(
+                      path=path_string(path),
+                      positions=','.join(difference['positions']),
+                      ob1=difference['ob1'],
+                      ob2=difference['ob2']))
           return difference
         else:
           return False
@@ -53,14 +60,21 @@ def compare(ob1, ob2, path=[]):
       else:
         i = 1
         val = ob1[key]
-      print "{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n\n".format(path_str, key, i, i%2+1, val, path_str)
+      print_msg("{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n\n".format(
+                path_str, key, i, i%2+1, val, path_str))
       continue
     childpath = copy(path)
     childpath.append("'"+key+"'" if isinstance(key, basestring) else str(key))
     different = compare(ob1[key], ob2[key], childpath)
     if different:
       if not isinstance(different, dict):
-        print "'{}' was different:\n{}\n{}\n\n".format(key, ob1[key], ob2[key])
+        print_msg("'{}' was different:\n{}\n{}\n\n".format(key, ob1[key], ob2[key]))
+  if path == []:
+    global messages
+    messages.reverse()
+    for message in messages:
+      print message
+    messages = []
   return False
 
 
