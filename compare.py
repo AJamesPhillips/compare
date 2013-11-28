@@ -16,7 +16,7 @@ def compare(ob1, ob2, path=[]):
         for i in range(0, m):
           if i < len(ob2) and i < len(ob1):
             childpath = copy(path)
-            childpath.append(str(i))
+            childpath.append('i:'+str(i))
             different = compare(ob1[i], ob2[i], childpath)
             if different:
               difference['ob1'].append(ob1[i])
@@ -54,7 +54,7 @@ def compare(ob1, ob2, path=[]):
       print "{} > '{}'   in ob2, value={}\n{}\n\n".format(path_str, key, ob2[key], path_str)
       continue
     childpath = copy(path)
-    childpath.append("'"+str(key)+"'")
+    childpath.append("'"+key+"'" if isinstance(key, str) else str(key))
     different = compare(ob1[key], ob2[key], childpath)
     if different:
       if not isinstance(different, dict):
@@ -63,8 +63,8 @@ def compare(ob1, ob2, path=[]):
 
 
 if __name__ == '__main__':
-  ob1 = {'a':{'b':[1,{'c':1,'d':2,'nested_e':['some val']},2],'f':3},'g':3}
-  ob2 = {'a':{'b':[1,{'c':1,'nested_e':['some val', 'something']},2,3],'f':3},'g':4}
+  ob1 = {'a':{3:[1,{'c':1,'d':2,'nested_e':['some val']},2],'f':3},'g':3}
+  ob2 = {'a':{3:[1,{'c':1,'nested_e':['some val', 'something']},2,3],'f':3},'g':4}
   print 'Comparing two objects: \n{}\n{}\n\n'.format(ob1, ob2)
   compare(ob1, ob2)
 
