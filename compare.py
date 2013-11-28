@@ -47,8 +47,12 @@ def compare(ob1, ob2, path=[]):
   for key in keys:
     path_str = path_string(path)
     if key not in ob1 or key not in ob2:
-      i = 2 if key not in ob1 else 1
-      val = locals().get('ob'+str(i))[key]
+      if key not in ob1:
+        i = 2
+        val = ob2[key]
+      else:
+        i = 1
+        val = ob1[key]
       print "{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n\n".format(path_str, key, i, i%2+1, val, path_str)
       continue
     childpath = copy(path)
