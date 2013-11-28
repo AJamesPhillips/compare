@@ -1,7 +1,7 @@
 Compare
 =======
 
-Compare objects and lists in python
+Visualise differences between two objects or lists
 
 
 
