@@ -51,7 +51,16 @@ def compare(ob1, ob2, path=[]):
         else:
           return False
       else:
-        # They could be sets but they're not equal so return different = True
+        if (isinstance(ob1, set) and isinstance(ob2, set)):
+          union = ob1 and ob2
+          ob1_extra = ','.join(map(str, list(ob1 - union)))
+          ob2_extra = ','.join(map(str, list(ob2 - union)))
+          msg = "{path} sets are different".format(path=path_string(path))
+          if(ob1_extra):
+            msg += " set 1 has extra values:\n{ob1_extra}\n".format(ob1_extra=ob1_extra)
+          if(ob2_extra):
+            msg += " set 1 is missing values:\n{ob2_extra}\n".format(ob2_extra=ob2_extra)
+          print_msg(msg)
         return True
     else:
       return False
@@ -75,7 +84,7 @@ def compare(ob1, ob2, path=[]):
       different = compare(ob1[key], ob2[key], childpath)
       if different:
         if not isinstance(different, dict):
-          print_msg("'{}' was different:\n{}\n{}\n\n".format(key, ob1[key], ob2[key]))
+          print_msg("{} > '{}' value is different:\n{}\n{}\n\n".format(path_string(path), key, ob1[key], ob2[key]))
   if path == []:
     global messages
     messages.reverse()
@@ -96,8 +105,7 @@ if __name__ == '__main__':
   print('## Example 2: Comparing two simple list: \n{}\n{}\n\n'.format(l1, l2))
   compare(l1, l2)
 
-
-  l1 = [1, {'nested': 2}]
-  l2 = [1, {'nested': 3}]
-  print('## Example 3: Comparing lists with nested object: \n{}\n{}\n\n'.format(l1, l2))
+  l1 = [1, {'a': 10, 'nested_diff': 2}, {'A', 3}]
+  l2 = [1, {'a': 10, 'nested_diff': 3}, {'A', 4}]
+  print('## Example 3: Comparing lists with nested dict and set: \n{}\n{}\n\n'.format(l1, l2))
   compare(l1, l2)
