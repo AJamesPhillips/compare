@@ -13,6 +13,9 @@ def print_msg(message):
   messages.append(message)
 
 
+"""
+Will return True if different
+"""
 def compare(ob1, ob2, path=[]):
   if not (isinstance(ob1, dict) and isinstance(ob1, dict)):
     if ob1 != ob2:
@@ -48,6 +51,7 @@ def compare(ob1, ob2, path=[]):
         else:
           return False
       else:
+        # They could be sets but they're not equal so return different = True
         return True
     else:
       return False
@@ -90,4 +94,10 @@ if __name__ == '__main__':
   l1 = [1,3,5,7]
   l2 = [2,4,6,]
   print('## Example 2: Comparing two simple list: \n{}\n{}\n\n'.format(l1, l2))
+  compare(l1, l2)
+
+
+  l1 = [1, {'nested': 2}]
+  l2 = [1, {'nested': 3}]
+  print('## Example 3: Comparing lists with nested object: \n{}\n{}\n\n'.format(l1, l2))
   compare(l1, l2)
