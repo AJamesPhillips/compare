@@ -41,7 +41,7 @@ def compare(ob1, ob2, path=[]):
               difference['ob2'].append('<not present>')
             difference['positions'].append(str(i))
         if difference['ob1']:
-          print_msg("{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n\n".format(
+          print_msg("{path} lists differed at positions: {positions}\n{ob1}\n{ob2}\n".format(
                       path=path_string(path),
                       positions=','.join(difference['positions']),
                       ob1=difference['ob1'],
@@ -76,7 +76,7 @@ def compare(ob1, ob2, path=[]):
         else:
           i = 1
           val = ob1[key]
-        print_msg("{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n\n".format(
+        print_msg("{} > '{}'  key present in ob{}, absent in ob{}, value={}\n{}\n".format(
                   path_str, key, i, i%2+1, val, path_str))
         continue
       childpath = copy(path)
@@ -84,7 +84,9 @@ def compare(ob1, ob2, path=[]):
       different = compare(ob1[key], ob2[key], childpath)
       if different:
         if not isinstance(different, dict):
-          print_msg("{} > '{}' value is different:\n{}\n{}\n\n".format(path_string(path), key, ob1[key], ob2[key]))
+          pth = path_string(path)
+          pth += (" > " if path else "")
+          print_msg("{}'{}' value is different:\n{}\n{}\n".format(pth, key, ob1[key], ob2[key]))
   if path == []:
     global messages
     messages.reverse()
@@ -97,15 +99,15 @@ def compare(ob1, ob2, path=[]):
 if __name__ == '__main__':
   ob1 = {'a':{3:[1,{'c':1,'d':2,'nested_e':['some val']},2],'f':3},'g':3}
   ob2 = {'a':{3:[1,{'c':1,'nested_e':['some val', 'something', 'else']},2,3],'f':3},'g':4}
-  print('## Example 1: Comparing two objects: \n{}\n{}\n\n'.format(ob1, ob2))
+  print('## Example 1: Comparing two objects: \n{}\n{}\n'.format(ob1, ob2))
   compare(ob1, ob2)
 
   l1 = [1,3,5,7]
   l2 = [2,4,6,]
-  print('## Example 2: Comparing two simple list: \n{}\n{}\n\n'.format(l1, l2))
+  print('\n\n## Example 2: Comparing two simple list: \n{}\n{}\n'.format(l1, l2))
   compare(l1, l2)
 
   l1 = [1, {'a': 10, 'nested_diff': 2}, {'A', 3}]
   l2 = [1, {'a': 10, 'nested_diff': 3}, {'A', 4}]
-  print('## Example 3: Comparing lists with nested dict and set: \n{}\n{}\n\n'.format(l1, l2))
+  print('\n\n## Example 3: Comparing lists with nested dict and set: \n{}\n{}\n'.format(l1, l2))
   compare(l1, l2)
