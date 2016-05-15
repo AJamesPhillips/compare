@@ -8,23 +8,26 @@ Visualise differences between two dicts or lists
 ## Example
 
     >>> from compare import compare
-    >>> ob1 = {'a': {'b': [1, {'nested_e': ['some val'], 'c': 1, 'd': 2}, 2], 'f': 3}, 'g': 3}
-    >>> ob2 = {'a': {'b': [1, {'nested_e': ['some val', 'something'], 'c': 1}, 2, 3], 'f': 3}, 'g': 4}
+    >>> ob1 = {'a': 3, 'b': {'c': [0, {'d': 1, 'e': 2, 'nested_f': ['some val']             }, 2   ], 'g': {3, 4}}}
+    >>> ob2 = {'a': 4, 'b': {'c': [0, {'d': 1,         'nested_f': ['some val', 'something']}, 2, 3], 'g': {3, 5}}}
     >>> compare(ob1, ob2)
 
-
-    'g' value is different:
+    . > 'a' dict value is different:
     3
     4
 
-    'a' > 'b' lists differed at positions: 3
-    ['<not present>']
-    [3]
+    . > 'b' > 'c' > i:1 > 'e' dict key present in ob1, absent in ob2, value=2
 
-    'a' > 'b' > i:1 > 'd'  key present in ob1, absent in ob2, value=2
-    'a' > 'b' > i:1
-
-    'a' > 'b' > i:1 > 'nested_e' lists differed at positions: 1
+    . > 'b' > 'c' > i:1 > 'nested_f' lists differed at positions: 1
     ['<not present>']
     ['something']
 
+    . > 'b' > 'c' lists differed at positions: 3
+    ['<not present>']
+    [3]
+
+    . > 'b' > 'g' sets are different:
+    Set in ob1 has extra values:
+    5
+    Set in ob1 is missing values:
+    4

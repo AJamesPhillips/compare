@@ -91,9 +91,9 @@ def _comp_sets(ob1, ob2, path):
   ob2_extra = ','.join(map(str, sorted(list(union - ob2))))
   msg = "{path} sets are different:\n".format(path=path_string(path))
   if(ob1_extra):
-    msg += "Set 1 has extra values:\n{ob1_extra}\n".format(ob1_extra=ob1_extra)
+    msg += "Set in ob1 has extra values:\n{ob1_extra}\n".format(ob1_extra=ob1_extra)
   if(ob2_extra):
-    msg += "Set 1 is missing values:\n{ob2_extra}\n".format(ob2_extra=ob2_extra)
+    msg += "Set in ob1 is missing values:\n{ob2_extra}\n".format(ob2_extra=ob2_extra)
   print_msg(msg)
 
 
@@ -108,7 +108,7 @@ def compare(ob1, ob2, return_messages=False):
 
   msgs = messages
   messages = []
-  return msgs if return_messages else different
+  return msgs if return_messages else bool(different)
 
 
 if __name__ == '__main__':
@@ -122,23 +122,25 @@ if __name__ == '__main__':
     ". > 'a' > 3 lists differed at positions: 3\n['<not present>']\n[3]\n", ". > 'g' dict value is different:\n3\n4\n"
   ]
   assert not compare(result, expected)
+  print('\n\n')
 
 
   l1 = [1,3,5,7]
   l2 = [2,4,6,]
-  print('## Example 2: Comparing two simple list: \n{}\n{}\n'.format(l1, l2))
+  print('## Example 2: Comparing two simple list: \n{}\n{}\n\n'.format(l1, l2))
   result = compare(l1, l2, True)
   expected = [". lists differed at positions: 0,1,2,3\n[1, 3, 5, 7]\n[2, 4, 6, '<not present>']\n"]
   assert not compare(result, expected)
+  print('\n\n')
 
 
   l1 = [1, {'a': 10, 'nested_diff': 2}, {'A', 3}]
   l2 = [1, {'a': 10, 'nested_diff': 3}, {'A', 4}]
-  print('## Example 3: Comparing lists with nested dict and set: \n{}\n{}\n'.format(l1, l2))
+  print('## Example 3: Comparing lists with nested dict and set: \n{}\n{}\n\n'.format(l1, l2))
   result = compare(l1, l2, True)
   expected = [
     ". > i:1 > 'nested_diff' dict value is different:\n2\n3\n",
-    '. > i:2 sets are different:\nSet 1 has extra values:\n4\nSet 1 is missing values:\n3\n',
+    '. > i:2 sets are different:\nSet in ob1 has extra values:\n4\nSet in ob1 is missing values:\n3\n',
   ]
   assert not compare(result, expected)
 
